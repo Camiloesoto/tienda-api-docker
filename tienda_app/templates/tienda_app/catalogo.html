@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catalogo - API DRF</title>
+    <style>
+        body { background: #ffffff; color: #111111; font-family: sans-serif; margin: 2rem; }
+        code { background: #f3f3f3; padding: 0.1rem 0.3rem; }
+        a { color: #0b57d0; }
+    </style>
+</head>
+<body>
+    <h1>Catalogo de Libros</h1>
+    <p>Tutorial 03: esta vista HTML y el endpoint <code>POST /api/v1/comprar/</code> usan el mismo CompraService. Una compra por API descuenta este inventario.</p>
+    {% if libros %}
+        <ul>
+            {% for libro in libros %}
+                <li>
+                    <strong>{{ libro.titulo }}</strong>
+                    — ${{ libro.precio }}
+                    (stock: {{ libro.inventario.cantidad }})
+                    — <a href="{% url 'finalizar_compra' libro.id %}">Comprar (Factory + Builder)</a>
+                    — <a href="{% url 'compra_rapida' libro.id %}">Compra Rapida</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay libros registrados.</p>
+    {% endif %}
+</body>
+</html>

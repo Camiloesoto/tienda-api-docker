@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tienda Grado Empresarial - Factory y Builder</title>
+</head>
+<body>
+    <h1>Procesar Compra (Factory + Builder)</h1>
+
+    {% if mensaje_exito %}
+        <div style="color: green; font-weight: bold;">{{ mensaje_exito }}</div>
+        <a href="/">Volver a la tienda</a>
+    {% else %}
+        {% if error %}
+            <div style="color: red; border: 1px solid red; padding: 10px;">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <h2>{{ libro.titulo }}</h2>
+        <p>Precio con IVA: <strong>${{ total }}</strong></p>
+        <p>El procesador de pago lo decide <code>PaymentFactory</code> segun <code>PAYMENT_PROVIDER</code>.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label>Direccion de envio:</label><br>
+                <input type="text" name="direccion" value="Calle 123 - Medellin" size="40">
+            </p>
+            <button type="submit" style="padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer;">
+                Confirmar compra
+            </button>
+        </form>
+    {% endif %}
+</body>
+</html>
