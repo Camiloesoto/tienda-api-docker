@@ -3,9 +3,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from tienda_app.infra.factories import PaymentFactory
+from tienda_app.models import Libro
 from tienda_app.services import CompraService
 
-from .serializers import OrdenInputSerializer
+from .serializers import LibroSerializer, OrdenInputSerializer
+
+
+class ProductosAPIView(APIView):
+    """
+    Endpoint de catalogo via JSON (monolito Django v1).
+    GET /api/v1/productos/
+    """
+
+    def get(self, request):
+        libros = Libro.objects.select_related('inventario').all()
+        serializer = LibroSerializer(libros, many=True)
+        return Response(serializer.data)
 
 
 class CompraAPIView(APIView):
